@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>💖 Deborah?</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #fad0c4, #fad0c4);
+      font-family: Arial, sans-serif;
+      position: relative;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      z-index: 2;
+      position: relative;
+    }
+
+    h1 {
+      color: #ff4d6d;
+      margin-bottom: 30px;
+    }
+
+    button {
+      font-size: 20px;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.3s ease;
+      position: relative;
+    }
+
+    #yes {
+      background-color: #ff4d6d;
+      color: white;
+    }
+
+    #no {
+      background-color: #ccc;
+      color: #333;
+    }
+
+    .heart {
+      position: absolute;
+      top: -10px;
+      font-size: 20px;
+      animation: fall linear forwards;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Muzică fundal -->
+  <audio id="bgMusic" loop>
+    <source src="nevasta.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="card">
+    <h1>Deborah 💕<br>Wanna be my valentine?</h1>
+    <button id="yes" onclick="yesClicked()">YES 💖</button>
+    <button id="no" onclick="noClicked()">NO 🙃</button>
+  </div>
+
+  <script>
+    let scale = 1;
+    let musicStarted = false;
+
+    // Pornire muzică
+    function startMusic() {
+      if (!musicStarted) {
+        document.getElementById("bgMusic").play();
+        musicStarted = true;
+      }
+    }
+
+    // Butonul NO → mărește YES
+    function noClicked() {
+      startMusic();
+      scale += 0.1; // crește puțin
+      document.getElementById("yes").style.transform = `scale(${scale})`;
+    }
+
+    // Butonul YES → mesaj final
+    function yesClicked() {
+      startMusic();
+      const bgMusic = document.getElementById("bgMusic"); // salvăm elementul audio
+
+      document.body.innerHTML = `
+        <div style="
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          height:100vh;
+          background:linear-gradient(135deg,#fad0c4,#fad0c4);
+          color:white;
+          font-family:Arial, sans-serif;
+          text-align:center;
+          position:relative;
+          overflow:hidden;
+        ">
+          <h1 style="font-size:55px;">
+            YEEEY 💍💖<br>
+            Deborah, i love u! 😍<br>
+             You are my valentine 💕
+          </h1>
+        </div>
+      `;
+
+      // Re-adăugăm muzica în body
+      document.body.appendChild(bgMusic);
+    }
+
+    // Creează inimioare care cad
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+      heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 6000);
+    }
+
+    setInterval(createHeart, 300); // inimioare cad continuu
+  </script>
+</body>
+</html>
